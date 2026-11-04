@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Air Express Cargo | Logística y carga internacional</title>
+<meta name="description" content="Air Express Cargo: carga aérea, marítima y courier internacional desde y hacia Chile. Rastrea tu envío o solicita una cotización.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="container">
+    <a href="index.html" class="logo">
+      <span class="logo-mark"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f28c28" stroke-width="2"><path d="M2 16l20-8-6 12-3-5-5 3z"/><path d="M13 15l9-7"/></svg></span>
+      <span>Air Express<small>Cargo</small></span>
+    </a>
+    <nav class="nav" id="nav">
+      <a href="#servicios">Servicios</a>
+      <a href="#como-funciona">Cómo funciona</a>
+      <a href="#nosotros">Nosotros</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <div class="header-cta">
+      <a href="#rastrear" class="btn btn-ghost" data-open-tab="track">Rastrear</a>
+      <a href="cotizar.html" class="btn btn-primary">Cotizar</a>
+      <button class="menu-btn" aria-label="Abrir menú" id="menuBtn"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0b2545" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<section class="hero" id="rastrear">
+  <div class="container">
+    <div>
+      <span class="eyebrow">Carga internacional · Chile</span>
+      <h1>Tu carga, en el lugar correcto y a tiempo.</h1>
+      <p class="lead">Coordinamos envíos aéreos, marítimos y courier para empresas que importan y exportan. Un ejecutivo te acompaña de punta a punta.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <a href="cotizar.html" class="btn btn-primary">Solicitar cotización</a>
+        <a href="#servicios" class="btn btn-outline-light">Ver servicios</a>
+      </div>
+      <div class="hero-stats">
+        <div><strong>+20</strong><span>años de experiencia</span></div>
+        <div><strong>24/7</strong><span>seguimiento de carga</span></div>
+        <div><strong>B2B</strong><span>atención con ejecutivo</span></div>
+      </div>
+    </div>
+
+    <div class="widget">
+      <div class="tabs" role="tablist">
+        <button class="tab active" role="tab" data-tab="track" aria-selected="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>Rastrear
+        </button>
+        <button class="tab" role="tab" data-tab="quote" aria-selected="false">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>Cotizar
+        </button>
+      </div>
+      <div class="tab-panel active" id="panel-track">
+        <h3>Rastrea tu envío</h3>
+        <p>Ingresa tu número de guía aérea (AWB), BL o código de seguimiento.</p>
+        <form id="trackForm">
+          <div class="field">
+            <label for="trackNum">Número de seguimiento</label>
+            <input id="trackNum" placeholder="Ej: 045-12345678" required>
+          </div>
+          <button class="btn btn-primary" style="width:100%">Rastrear envío</button>
+        </form>
+        <div class="track-result" id="trackResult"></div>
+      </div>
+      <div class="tab-panel" id="panel-quote">
+        <h3>Cotiza tu envío en 3 pasos</h3>
+        <p>Cuéntanos qué necesitas mover y un ejecutivo te enviará la tarifa.</p>
+        <ul class="mini-list">
+          <li>Ruta y tipo de servicio</li>
+          <li>Detalle de la carga (bultos o pallets, opcional)</li>
+          <li>Datos de contacto de tu empresa</li>
+        </ul>
+        <a href="cotizar.html" class="btn btn-primary" style="width:100%">Comenzar cotización</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="servicios">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Servicios</span>
+      <h2>Soluciones logísticas para cada tipo de carga</h2>
+      <p>Desde un documento urgente hasta contenedores completos, gestionamos el transporte y los trámites.</p>
+    </div>
+    <div class="grid-3">
+      <article class="card">
+        <div class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 16l20-8-6 12-3-5-5 3z"/></svg></div>
+        <h3>Carga aérea</h3>
+        <p>Importación y exportación por vía aérea con conexiones a los principales aeropuertos del mundo.</p>
+        <ul><li>Carga general y consolidada</li><li>Envíos urgentes</li></ul>
+      </article>
+      <article class="card">
+        <div class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17l2 3h14l2-3"/><path d="M5 17V9h14v8"/><path d="M9 9V5h6v4"/><path d="M2 21c2 0 2-1 4-1s2 1 4 1 2-1 4-1 2 1 4 1 2-1 4-1"/></svg></div>
+        <h3>Carga marítima</h3>
+        <p>Contenedores completos (FCL) y carga consolidada (LCL) con seguimiento en cada etapa.</p>
+        <ul><li>FCL y LCL</li><li>Coordinación portuaria</li></ul>
+      </article>
+      <article class="card">
+        <div class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 8l-9-5-9 5 9 5 9-5z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/></svg></div>
+        <h3>Courier internacional</h3>
+        <p>Envíos de documentos y paquetes puerta a puerta, con tiempos de tránsito cortos.</p>
+        <ul><li>Puerta a puerta</li><li>Muestras y repuestos</li></ul>
+      </article>
+      <article class="card">
+        <div class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/></svg></div>
+        <h3>Gestión aduanera</h3>
+        <p>Apoyo en documentación y coordinación con agentes de aduana para que tu carga no se detenga.</p>
+      </article>
+      <article class="card">
+        <div class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 3h15v13H1z"/><path d="M16 8h4l3 3v5h-7z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
+        <h3>Transporte nacional</h3>
+        <p>Retiro y entrega en bodega, conectando el tramo internacional con tu operación local.</p>
+      </article>
+      <article class="card">
+        <div class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V8l7-5 7 5v13"/><path d="M9 21v-6h6v6"/></svg></div>
+        <h3>Almacenaje</h3>
+        <p>Bodegaje temporal, consolidación y preparación de carga antes del despacho.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="bg-soft" id="como-funciona">
+  <div class="container">
+    <div class="section-head center">
+      <span class="eyebrow">Cómo funciona</span>
+      <h2>De la cotización a la entrega, sin complicaciones</h2>
+    </div>
+    <div class="steps">
+      <div class="step"><h4>Solicitas tu cotización</h4><p>Completas el formulario en pocos pasos con la ruta y los datos de tu carga.</p></div>
+      <div class="step"><h4>Te enviamos la tarifa</h4><p>Un ejecutivo revisa tu solicitud y te responde con una propuesta a tu medida.</p></div>
+      <div class="step"><h4>Coordinamos el envío</h4><p>Gestionamos retiro, documentación, transporte y trámites aduaneros.</p></div>
+      <div class="step"><h4>Sigues tu carga</h4><p>Rastreas el envío en todo momento hasta que llega a destino.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="nosotros">
+  <div class="container about">
+    <div>
+      <span class="eyebrow">Nosotros</span>
+      <div class="section-head" style="margin-bottom:0">
+        <h2>Un equipo dedicado a que tu carga llegue bien</h2>
+        <p>Somos una empresa chilena de logística internacional. Combinamos una red de agentes en el extranjero con atención cercana: cada cliente tiene un ejecutivo que conoce su operación.</p>
+      </div>
+      <ul class="checks">
+        <li>Atención personalizada con ejecutivo asignado</li>
+        <li>Tarifas competitivas y transparentes</li>
+        <li>Red de agentes y aerolíneas a nivel mundial</li>
+        <li>Seguimiento y comunicación proactiva</li>
+      </ul>
+    </div>
+    <div class="about-visual">
+      <div><strong>+20</strong><span>años en el mercado</span></div>
+      <div><strong>+100</strong><span>destinos conectados</span></div>
+      <div><strong>3</strong><span>modalidades: aérea, marítima y courier</span></div>
+      <div><strong>1</strong><span>ejecutivo para todo tu proceso</span></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="container">
+    <div class="cta-band">
+      <div>
+        <h2>¿Tienes una carga por mover?</h2>
+        <p>Cotiza en minutos. Te respondemos dentro del mismo día hábil.</p>
+      </div>
+      <a href="cotizar.html" class="btn">Solicitar cotización</a>
+    </div>
+  </div>
+</section>
+
+<section class="bg-soft" id="contacto">
+  <div class="container contact-grid">
+    <div>
+      <span class="eyebrow">Contacto</span>
+      <div class="section-head">
+        <h2>Hablemos de tu próximo envío</h2>
+        <p>Escríbenos o llámanos. Si prefieres, déjanos tus datos y te contactamos.</p>
+      </div>
+      <div class="contact-item"><div class="icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1.9.4 1.8.7 2.7a2 2 0 01-.5 2.1L8 9.8a16 16 0 006 6l1.3-1.3a2 2 0 012.1-.4c.9.3 1.8.6 2.7.7a2 2 0 011.7 2z"/></svg></div><div><strong>Teléfono</strong><span>+56 2 0000 0000</span></div></div>
+      <div class="contact-item"><div class="icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M4 6l8 7 8-7"/></svg></div><div><strong>Correo</strong><span>contacto@airexpresscargo.cl</span></div></div>
+      <div class="contact-item"><div class="icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s-8-6-8-12a8 8 0 0116 0c0 6-8 12-8 12z"/><circle cx="12" cy="10" r="3"/></svg></div><div><strong>Oficina</strong><span>Santiago, Chile</span></div></div>
+    </div>
+    <form class="form-card" id="contactForm">
+      <div class="grid-2">
+        <div class="field"><label for="cName">Nombre</label><input id="cName" required></div>
+        <div class="field"><label for="cCompany">Empresa</label><input id="cCompany"></div>
+      </div>
+      <div class="grid-2">
+        <div class="field"><label for="cEmail">Correo</label><input id="cEmail" type="email" required></div>
+        <div class="field"><label for="cPhone">Teléfono</label><input id="cPhone" type="tel"></div>
+      </div>
+      <div class="field"><label for="cMsg">Mensaje</label><textarea id="cMsg" rows="4" required></textarea></div>
+      <button class="btn btn-primary">Enviar mensaje</button>
+      <p class="hint" id="contactOk" style="margin-top:12px;display:none;color:#1e9e5a">¡Gracias! Se abrirá tu correo para enviar el mensaje.</p>
+    </form>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a href="index.html" class="logo"><span class="logo-mark"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f28c28" stroke-width="2"><path d="M2 16l20-8-6 12-3-5-5 3z"/></svg></span><span>Air Express<small>Cargo</small></span></a>
+        <p>Logística internacional para empresas que importan y exportan desde Chile.</p>
+      </div>
+      <div><h5>Servicios</h5><ul><li><a href="#servicios">Carga aérea</a></li><li><a href="#servicios">Carga marítima</a></li><li><a href="#servicios">Courier</a></li></ul></div>
+      <div><h5>Empresa</h5><ul><li><a href="#nosotros">Nosotros</a></li><li><a href="#como-funciona">Cómo funciona</a></li><li><a href="#contacto">Contacto</a></li></ul></div>
+      <div><h5>Clientes</h5><ul><li><a href="#rastrear" data-open-tab="track">Rastrear envío</a></li><li><a href="cotizar.html">Cotizar</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© <span id="year"></span> Air Express Cargo. Todos los derechos reservados.</span><span>Santiago, Chile</span></div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

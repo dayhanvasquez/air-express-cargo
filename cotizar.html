@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cotizar envío | Air Express Cargo</title>
+<meta name="description" content="Solicita una cotización de carga aérea, marítima o courier. Un ejecutivo de Air Express Cargo te enviará la tarifa.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="container">
+    <a href="index.html" class="logo">
+      <span class="logo-mark"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f28c28" stroke-width="2"><path d="M2 16l20-8-6 12-3-5-5 3z"/><path d="M13 15l9-7"/></svg></span>
+      <span>Air Express<small>Cargo</small></span>
+    </a>
+    <nav class="nav" id="nav">
+      <a href="index.html#servicios">Servicios</a>
+      <a href="index.html#como-funciona">Cómo funciona</a>
+      <a href="index.html#nosotros">Nosotros</a>
+      <a href="index.html#contacto">Contacto</a>
+    </nav>
+    <div class="header-cta">
+      <a href="index.html#rastrear" class="btn btn-ghost">Rastrear</a>
+      <a href="cotizar.html" class="btn btn-primary">Cotizar</a>
+      <button class="menu-btn" aria-label="Abrir menú" id="menuBtn"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0b2545" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<div class="page-head">
+  <div class="container">
+    <div class="breadcrumb"><a href="index.html">Inicio</a> / Cotizar</div>
+    <h1>Solicita tu cotización</h1>
+    <p>Completa 3 pasos cortos. No calculamos el precio en línea: un ejecutivo revisa tu carga y te envía la tarifa.</p>
+  </div>
+</div>
+
+<main class="container quote-layout">
+  <div>
+    <div class="progress" id="progress">
+      <div class="progress-step current"><div class="progress-bar"></div><span>1. Ruta</span></div>
+      <div class="progress-step"><div class="progress-bar"></div><span>2. Carga</span></div>
+      <div class="progress-step"><div class="progress-bar"></div><span>3. Contacto</span></div>
+    </div>
+
+    <form class="form-card" id="quoteForm" novalidate>
+      <!-- STEP 1 -->
+      <div class="form-step active" data-step="1">
+        <h2>¿Qué necesitas mover?</h2>
+        <p>Elige el tipo de operación y la ruta.</p>
+
+        <div class="subhead">Operación</div>
+        <div class="choice-group" style="grid-template-columns:1fr 1fr">
+          <div class="choice"><input type="radio" name="operacion" id="op-imp" value="Importación" checked><label for="op-imp"><strong>Importación</strong><small>Traer carga a Chile</small></label></div>
+          <div class="choice"><input type="radio" name="operacion" id="op-exp" value="Exportación"><label for="op-exp"><strong>Exportación</strong><small>Enviar carga desde Chile</small></label></div>
+        </div>
+
+        <div class="subhead">Modalidad</div>
+        <div class="choice-group">
+          <div class="choice"><input type="radio" name="modalidad" id="m-air" value="Aérea" checked><label for="m-air"><strong>Aérea</strong><small>Rápida, carga general</small></label></div>
+          <div class="choice"><input type="radio" name="modalidad" id="m-sea" value="Marítima"><label for="m-sea"><strong>Marítima</strong><small>FCL o LCL</small></label></div>
+          <div class="choice"><input type="radio" name="modalidad" id="m-cou" value="Courier"><label for="m-cou"><strong>Courier</strong><small>Puerta a puerta</small></label></div>
+        </div>
+
+        <div class="grid-2">
+          <div class="field"><label for="origen">Origen (ciudad, país)</label><input id="origen" name="origen" placeholder="Ej: Miami, EE.UU." required></div>
+          <div class="field"><label for="destino">Destino (ciudad, país)</label><input id="destino" name="destino" placeholder="Ej: Santiago, Chile" required></div>
+        </div>
+        <div class="error" data-error="1">Completa origen y destino para continuar.</div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="form-step" data-step="2">
+        <h2>Cuéntanos sobre tu carga</h2>
+        <p>Con lo básico basta. Si tienes las medidas, agrégalas para una tarifa más precisa.</p>
+
+        <div class="grid-2">
+          <div class="field"><label for="mercancia">Tipo de mercancía</label><input id="mercancia" name="mercancia" placeholder="Ej: repuestos eléctricos" required></div>
+          <div class="field"><label for="pesoTotal">Peso total aprox. (kg)</label><input id="pesoTotal" name="pesoTotal" type="number" min="0" step="0.1" placeholder="Ej: 350" required></div>
+        </div>
+        <div class="grid-2">
+          <div class="field"><label for="cantBultos">Cantidad de bultos / pallets</label><input id="cantBultos" name="cantBultos" type="number" min="1" placeholder="Ej: 4"></div>
+          <div class="field"><label for="fecha">Fecha estimada de embarque</label><input id="fecha" name="fecha" type="date"></div>
+        </div>
+        <div class="error" data-error="2">Indica el tipo de mercancía y el peso aproximado.</div>
+
+        <div class="toggle-row">
+          <div><strong>Agregar medidas detalladas</strong><small>Opcional · bultos de distintas medidas o pallets</small></div>
+          <label class="switch"><input type="checkbox" id="detailToggle"><span></span></label>
+        </div>
+
+        <div class="detail" id="detailBox">
+          <div class="subhead">Bultos sueltos</div>
+          <p class="hint">Agrega una fila por cada grupo de bultos con la misma medida.</p>
+          <div class="pkg-head"><span>Cant.</span><span>Largo (cm)</span><span>Ancho (cm)</span><span>Alto (cm)</span><span>Peso c/u (kg)</span><span></span></div>
+          <div id="pkgList"></div>
+          <button type="button" class="add-btn" id="addPkg">+ Agregar bultos</button>
+
+          <div class="subhead">Pallets</div>
+          <p class="hint">Indica la base del pallet y la altura total, desde el piso hasta el último bulto.</p>
+          <div class="pkg-head"><span>Cant.</span><span>Base largo (cm)</span><span>Base ancho (cm)</span><span>Altura total (cm)</span><span>Peso c/u (kg)</span><span></span></div>
+          <div id="palletList"></div>
+          <button type="button" class="add-btn" id="addPallet">+ Agregar pallets</button>
+
+          <div class="field" style="margin-top:16px"><label for="obs">Observaciones</label><textarea id="obs" name="obs" rows="3" placeholder="Carga peligrosa, apilable, refrigerada, etc."></textarea></div>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="form-step" data-step="3">
+        <h2>¿A quién le enviamos la tarifa?</h2>
+        <p>Usaremos estos datos solo para responder tu cotización.</p>
+        <div class="grid-2">
+          <div class="field"><label for="empresa">Empresa</label><input id="empresa" name="empresa" required></div>
+          <div class="field"><label for="rut">RUT empresa</label><input id="rut" name="rut" placeholder="Ej: 76.123.456-7"></div>
+        </div>
+        <div class="grid-2">
+          <div class="field"><label for="nombre">Nombre de contacto</label><input id="nombre" name="nombre" required></div>
+          <div class="field"><label for="cargo">Cargo</label><input id="cargo" name="cargo"></div>
+        </div>
+        <div class="grid-2">
+          <div class="field"><label for="email">Correo</label><input id="email" name="email" type="email" required></div>
+          <div class="field"><label for="telefono">Teléfono</label><input id="telefono" name="telefono" type="tel" placeholder="+56 9 ..."></div>
+        </div>
+        <div class="error" data-error="3">Completa empresa, nombre y un correo válido.</div>
+      </div>
+
+      <!-- SUCCESS -->
+      <div class="form-step" data-step="4">
+        <div class="success">
+          <div class="icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></div>
+          <h2>¡Solicitud lista!</h2>
+          <p style="color:var(--muted);max-width:440px;margin:8px auto 22px">Se abrió tu correo con el detalle de la cotización. Envíalo y un ejecutivo te responderá con la tarifa dentro del mismo día hábil.</p>
+          <a href="index.html" class="btn btn-ghost">Volver al inicio</a>
+        </div>
+      </div>
+
+      <div class="form-nav" id="formNav">
+        <button type="button" class="btn btn-ghost" id="prevBtn" style="visibility:hidden">← Atrás</button>
+        <button type="button" class="btn btn-primary" id="nextBtn">Continuar →</button>
+      </div>
+    </form>
+  </div>
+
+  <aside class="aside">
+    <div class="summary">
+      <h3>Resumen de tu solicitud</h3>
+      <dl>
+        <div><dt>Operación</dt><dd id="s-op">Importación</dd></div>
+        <div><dt>Modalidad</dt><dd id="s-mod">Aérea</dd></div>
+        <div><dt>Ruta</dt><dd id="s-ruta">—</dd></div>
+        <div><dt>Mercancía</dt><dd id="s-merc">—</dd></div>
+        <div><dt>Bultos / pallets</dt><dd id="s-bultos">—</dd></div>
+        <div><dt>Peso total</dt><dd id="s-peso">—</dd></div>
+        <div><dt>Volumen</dt><dd id="s-vol">—</dd></div>
+      </dl>
+      <p class="note">El precio final lo define un ejecutivo según peso, volumen y ruta.</p>
+    </div>
+    <div class="side-card">
+      <h4>¿Qué pasa después?</h4>
+      <ol>
+        <li>Recibimos tu solicitud.</li>
+        <li>Un ejecutivo revisa la carga y la ruta.</li>
+        <li>Te enviamos la tarifa por correo el mismo día hábil.</li>
+      </ol>
+    </div>
+    <div class="side-card">
+      <h4>¿Necesitas ayuda?</h4>
+      <p>Si no tienes todos los datos, envía lo que tengas: te ayudamos a completarlo.</p>
+      <p>📞 <a href="tel:+56200000000">+56 2 0000 0000</a></p>
+      <p>✉️ <a href="mailto:contacto@airexpresscargo.cl">contacto@airexpresscargo.cl</a></p>
+    </div>
+  </aside>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom" style="border:0;padding:0"><span>© <span id="year"></span> Air Express Cargo. Todos los derechos reservados.</span><span>Santiago, Chile</span></div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
