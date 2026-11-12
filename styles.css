@@ -179,9 +179,24 @@ section{padding:84px 0}
 .success{text-align:center;padding:30px 10px}
 .success .icon{margin:0 auto 18px;width:64px;height:64px;background:#e7f7ee;color:#1e9e5a}
 
+/* Franja de respaldo */
+section.trust{padding:0;background:#fff;border-bottom:1px solid var(--line)}
+.trust-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;padding:26px 0}
+.trust-item{display:flex;gap:12px;align-items:center}
+.trust-icon{flex:0 0 42px;height:42px;border-radius:10px;background:#fff4e8;color:var(--orange-dark);display:grid;place-items:center}
+.trust-item strong{display:block;color:var(--navy);font-size:15px;line-height:1.3}
+.trust-item span{color:var(--muted);font-size:13px}
+
+/* Por qué elegirnos */
+.why{background:#fff;border-radius:var(--radius);padding:28px;border:1px solid var(--line);border-top:4px solid var(--orange);transition:.2s}
+.why:hover{box-shadow:var(--shadow);transform:translateY(-3px)}
+.why-icon{width:48px;height:48px;border-radius:12px;background:var(--navy);color:#fff;display:grid;place-items:center;margin-bottom:18px}
+.why h3{font-size:18px;color:var(--navy);margin-bottom:8px;line-height:1.3}
+.why p{color:var(--muted);font-size:15px}
+
 @media (max-width:980px){
   .hero .container,.about,.contact-grid,.quote-layout{grid-template-columns:1fr}
-  .grid-3{grid-template-columns:1fr 1fr}
+  .grid-3,.trust-grid{grid-template-columns:1fr 1fr}
   .steps{grid-template-columns:1fr 1fr}
   .footer-grid{grid-template-columns:1fr 1fr}
   .aside{position:static}
@@ -190,10 +205,11 @@ section{padding:84px 0}
   .nav,.header-cta .btn-ghost{display:none}
   .menu-btn{display:block}
   .nav.open{display:flex;flex-direction:column;position:absolute;top:70px;left:0;right:0;background:#fff;padding:20px 16px;border-bottom:1px solid var(--line);gap:16px}
-  .grid-3,.steps,.grid-2,.footer-grid{grid-template-columns:1fr}
+  .grid-3,.steps,.grid-2,.footer-grid,.trust-grid{grid-template-columns:1fr}
   .choice-group{grid-template-columns:1fr}
   section{padding:60px 0}
   .hero .container{padding:52px 0 60px}
+  .hero-stats{gap:20px 28px}
   .cta-band{padding:32px}
   .form-card{padding:22px}
   .pkg-head{display:none}
