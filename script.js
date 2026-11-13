@@ -30,7 +30,7 @@ if (trackForm) {
     e.preventDefault();
     const n = $('#trackNum').value.trim();
     const box = $('#trackResult');
-    box.innerHTML = `<strong>Guía ${n.replace(/[<>&"]/g, '')}</strong><br>El seguimiento en línea estará disponible pronto. Mientras tanto, escríbenos a <a href="mailto:${CONTACT_EMAIL}?subject=Seguimiento%20${encodeURIComponent(n)}" style="color:#1d6fd8;font-weight:600">${CONTACT_EMAIL}</a> y te informamos el estado.`;
+    box.innerHTML = `<strong>Guía ${n.replace(/[<>&"]/g, '')}</strong><br>El seguimiento en línea estará disponible pronto. Mientras tanto, escríbenos a <a href="mailto:${CONTACT_EMAIL}?subject=Seguimiento%20${encodeURIComponent(n)}" style="color:#005BAA;font-weight:600">${CONTACT_EMAIL}</a> y te informamos el estado.`;
     box.classList.add('show');
   });
 }
