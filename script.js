@@ -71,8 +71,8 @@ if (calcForm) {
     if (origen === destino) msg = 'El origen y el destino deben ser distintos.';
     else if (![alto, largo, ancho, peso].every(v => v > 0)) msg = 'Ingresa alto, largo, ancho y peso mayores a cero.';
     err.textContent = msg; err.classList.toggle('show', !!msg);
+    if (msg) { showResults(false); return false; }
     $('#ratesSub').textContent = `${origen} → ${destino}`;
-    if (msg) { $('#rates').innerHTML = ''; return; }
 
     const volKg = (alto * largo * ancho) / 6000;
     const kg = Math.max(peso, volKg);
@@ -96,8 +96,21 @@ if (calcForm) {
       </article>`;
     }).join('');
     $('#rates').insertAdjacentHTML('beforeend', `<p class="rate-kg">Peso cobrado: <strong>${kg.toLocaleString('es-CL', { maximumFractionDigits: 1 })} kg</strong>${volKg > peso ? ' (volumétrico)' : ''}</p>`);
+    return true;
   }
-  calcForm.addEventListener('submit', e => { e.preventDefault(); calculate(); });
-  $$('#calcForm select').forEach(el => el.addEventListener('change', calculate));
-  calculate();
+  const results = $('#results');
+  const submitBtn = $('.calc-btn', calcForm);
+  function showResults(on) {
+    results.hidden = !on;
+    $('.calc-layout').classList.toggle('has-results', on);
+    submitBtn.textContent = on ? 'Volver a cotizar' : 'Cotizar';
+  }
+  calcForm.addEventListener('submit', e => {
+    e.preventDefault();
+    if (calculate()) {
+      showResults(true);
+      // En pantallas angostas las tarifas quedan debajo: bajamos hasta ellas
+      if (window.innerWidth <= 980) results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
 }
