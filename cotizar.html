@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cotizar envío | Air Express Cargo</title>
-<meta name="description" content="Solicita una cotización de carga aérea, marítima o courier. Un ejecutivo de Air Express Cargo te enviará la tarifa.">
+<meta name="description" content="Cotiza tu envío con Air Express Cargo: compara al instante envío terrestre, aéreo Prime y aéreo Overnight.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=4">
+<link rel="stylesheet" href="styles.css?v=5">
 </head>
 <body>
 
@@ -35,147 +35,43 @@
 <div class="page-head">
   <div class="container">
     <div class="breadcrumb"><a href="index.html">Inicio</a> / Cotizar</div>
-    <h1>Solicita tu cotización</h1>
-    <p>Completa 3 pasos cortos. No calculamos el precio en línea: un ejecutivo revisa tu carga y te envía la tarifa.</p>
+    <h1>Cotiza tu envío</h1>
+    <p>Ingresa el origen, el destino y las medidas de tu carga, y compara al instante nuestros tres servicios.</p>
   </div>
 </div>
 
-<main class="container quote-layout">
-  <div>
-    <div class="progress" id="progress">
-      <div class="progress-step current"><div class="progress-bar"></div><span>1. Ruta</span></div>
-      <div class="progress-step"><div class="progress-bar"></div><span>2. Carga</span></div>
-      <div class="progress-step"><div class="progress-bar"></div><span>3. Contacto</span></div>
-    </div>
-
-    <form class="form-card" id="quoteForm" novalidate>
-      <!-- STEP 1 -->
-      <div class="form-step active" data-step="1">
-        <h2>¿Qué necesitas mover?</h2>
-        <p>Elige el tipo de operación y la ruta.</p>
-
-        <div class="subhead">Operación</div>
-        <div class="choice-group" style="grid-template-columns:1fr 1fr">
-          <div class="choice"><input type="radio" name="operacion" id="op-imp" value="Importación" checked><label for="op-imp"><strong>Importación</strong><small>Traer carga a Chile</small></label></div>
-          <div class="choice"><input type="radio" name="operacion" id="op-exp" value="Exportación"><label for="op-exp"><strong>Exportación</strong><small>Enviar carga desde Chile</small></label></div>
-        </div>
-
-        <div class="subhead">Modalidad</div>
-        <div class="choice-group">
-          <div class="choice"><input type="radio" name="modalidad" id="m-air" value="Aérea" checked><label for="m-air"><strong>Aérea</strong><small>Rápida, carga general</small></label></div>
-          <div class="choice"><input type="radio" name="modalidad" id="m-sea" value="Marítima"><label for="m-sea"><strong>Marítima</strong><small>FCL o LCL</small></label></div>
-          <div class="choice"><input type="radio" name="modalidad" id="m-cou" value="Courier"><label for="m-cou"><strong>Courier</strong><small>Puerta a puerta</small></label></div>
-        </div>
-
-        <div class="grid-2">
-          <div class="field"><label for="origen">Origen (ciudad, país)</label><input id="origen" name="origen" placeholder="Ej: Miami, EE.UU." required></div>
-          <div class="field"><label for="destino">Destino (ciudad, país)</label><input id="destino" name="destino" placeholder="Ej: Santiago, Chile" required></div>
-        </div>
-        <div class="error" data-error="1">Completa origen y destino para continuar.</div>
+<main class="container calc-layout">
+  <section class="calc-card" aria-labelledby="calcTitle">
+    <h2 id="calcTitle" class="calc-title">Datos de envío</h2>
+    <p class="calc-sub">Ingresa las medidas y el peso de tu bulto. Mientras más exactos, más precisa la tarifa.</p>
+    <form id="calcForm" novalidate>
+      <div class="grid-2">
+        <div class="field"><label for="qOrigen">Origen</label>
+          <select id="qOrigen"><option selected>Santiago</option><option>Punta Arenas</option><option>Puerto Natales</option><option>Porvenir</option><option>Puerto Williams</option><option>Coyhaique</option></select></div>
+        <div class="field"><label for="qDestino">Destino</label>
+          <select id="qDestino"><option>Santiago</option><option selected>Punta Arenas</option><option>Puerto Natales</option><option>Porvenir</option><option>Puerto Williams</option><option>Coyhaique</option></select></div>
       </div>
-
-      <!-- STEP 2 -->
-      <div class="form-step" data-step="2">
-        <h2>Cuéntanos sobre tu carga</h2>
-        <p>Con lo básico basta. Si tienes las medidas, agrégalas para una tarifa más precisa.</p>
-
-        <div class="grid-2">
-          <div class="field"><label for="mercancia">Tipo de mercancía</label><input id="mercancia" name="mercancia" placeholder="Ej: repuestos eléctricos" required></div>
-          <div class="field"><label for="pesoTotal">Peso total aprox. (kg)</label><input id="pesoTotal" name="pesoTotal" type="number" min="0" step="0.1" placeholder="Ej: 350" required></div>
-        </div>
-        <div class="grid-2">
-          <div class="field"><label for="cantBultos">Cantidad de bultos / pallets</label><input id="cantBultos" name="cantBultos" type="number" min="1" placeholder="Ej: 4"></div>
-          <div class="field"><label for="fecha">Fecha estimada de embarque</label><input id="fecha" name="fecha" type="date"></div>
-        </div>
-        <div class="error" data-error="2">Indica el tipo de mercancía y el peso aproximado.</div>
-
-        <div class="toggle-row">
-          <div><strong>Agregar medidas detalladas</strong><small>Opcional · bultos de distintas medidas o pallets</small></div>
-          <label class="switch"><input type="checkbox" id="detailToggle"><span></span></label>
-        </div>
-
-        <div class="detail" id="detailBox">
-          <div class="subhead">Bultos sueltos</div>
-          <p class="hint">Agrega una fila por cada grupo de bultos con la misma medida.</p>
-          <div class="pkg-head"><span>Cant.</span><span>Largo (cm)</span><span>Ancho (cm)</span><span>Alto (cm)</span><span>Peso c/u (kg)</span><span></span></div>
-          <div id="pkgList"></div>
-          <button type="button" class="add-btn" id="addPkg">+ Agregar bultos</button>
-
-          <div class="subhead">Pallets</div>
-          <p class="hint">Indica la base del pallet y la altura total, desde el piso hasta el último bulto.</p>
-          <div class="pkg-head"><span>Cant.</span><span>Base largo (cm)</span><span>Base ancho (cm)</span><span>Altura total (cm)</span><span>Peso c/u (kg)</span><span></span></div>
-          <div id="palletList"></div>
-          <button type="button" class="add-btn" id="addPallet">+ Agregar pallets</button>
-
-          <div class="field" style="margin-top:16px"><label for="obs">Observaciones</label><textarea id="obs" name="obs" rows="3" placeholder="Carga peligrosa, apilable, refrigerada, etc."></textarea></div>
-        </div>
+      <div class="dims">
+        <div class="field"><label for="qAlto">Alto</label><div class="unit"><input id="qAlto" type="number" min="1" inputmode="decimal" value="20"><span>cm</span></div></div>
+        <div class="field"><label for="qLargo">Largo</label><div class="unit"><input id="qLargo" type="number" min="1" inputmode="decimal" value="20"><span>cm</span></div></div>
+        <div class="field"><label for="qAncho">Ancho</label><div class="unit"><input id="qAncho" type="number" min="1" inputmode="decimal" value="20"><span>cm</span></div></div>
+        <div class="field"><label for="qPeso">Peso</label><div class="unit"><input id="qPeso" type="number" min="0.1" step="0.1" inputmode="decimal" value="10"><span>kg</span></div></div>
       </div>
-
-      <!-- STEP 3 -->
-      <div class="form-step" data-step="3">
-        <h2>¿A quién le enviamos la tarifa?</h2>
-        <p>Usaremos estos datos solo para responder tu cotización.</p>
-        <div class="grid-2">
-          <div class="field"><label for="empresa">Empresa</label><input id="empresa" name="empresa" required></div>
-          <div class="field"><label for="rut">RUT empresa</label><input id="rut" name="rut" placeholder="Ej: 76.123.456-7"></div>
-        </div>
-        <div class="grid-2">
-          <div class="field"><label for="nombre">Nombre de contacto</label><input id="nombre" name="nombre" required></div>
-          <div class="field"><label for="cargo">Cargo</label><input id="cargo" name="cargo"></div>
-        </div>
-        <div class="grid-2">
-          <div class="field"><label for="email">Correo</label><input id="email" name="email" type="email" required></div>
-          <div class="field"><label for="telefono">Teléfono</label><input id="telefono" name="telefono" type="tel" placeholder="+56 9 ..."></div>
-        </div>
-        <div class="error" data-error="3">Completa empresa, nombre y un correo válido.</div>
-      </div>
-
-      <!-- SUCCESS -->
-      <div class="form-step" data-step="4">
-        <div class="success">
-          <div class="icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></div>
-          <h2>¡Solicitud lista!</h2>
-          <p style="color:var(--muted);max-width:440px;margin:8px auto 22px">Se abrió tu correo con el detalle de la cotización. Envíalo y un ejecutivo te responderá con la tarifa dentro del mismo día hábil.</p>
-          <a href="index.html" class="btn btn-ghost">Volver al inicio</a>
-        </div>
-      </div>
-
-      <div class="form-nav" id="formNav">
-        <button type="button" class="btn btn-ghost" id="prevBtn" style="visibility:hidden">← Atrás</button>
-        <button type="button" class="btn btn-primary" id="nextBtn">Continuar →</button>
-      </div>
+      <p class="error" id="calcError"></p>
+      <button class="btn btn-primary calc-btn" type="submit">Cotizar</button>
     </form>
-  </div>
+    <div class="calc-note">
+      <strong>¿Varios bultos, pallets o carga especial?</strong>
+      <p>Para mercancías peligrosas, carga refrigerada o envíos de más de un bulto, <a href="mailto:contacto@airexpresscargo.cl?subject=Cotizaci%C3%B3n%20a%20medida">pide una cotización a medida</a> y un ejecutivo te responde el mismo día hábil.</p>
+    </div>
+  </section>
 
-  <aside class="aside">
-    <div class="summary">
-      <h3>Resumen de tu solicitud</h3>
-      <dl>
-        <div><dt>Operación</dt><dd id="s-op">Importación</dd></div>
-        <div><dt>Modalidad</dt><dd id="s-mod">Aérea</dd></div>
-        <div><dt>Ruta</dt><dd id="s-ruta">—</dd></div>
-        <div><dt>Mercancía</dt><dd id="s-merc">—</dd></div>
-        <div><dt>Bultos / pallets</dt><dd id="s-bultos">—</dd></div>
-        <div><dt>Peso total</dt><dd id="s-peso">—</dd></div>
-        <div><dt>Volumen</dt><dd id="s-vol">—</dd></div>
-      </dl>
-      <p class="note">El precio final lo define un ejecutivo según peso, volumen y ruta.</p>
-    </div>
-    <div class="side-card">
-      <h4>¿Qué pasa después?</h4>
-      <ol>
-        <li>Recibimos tu solicitud.</li>
-        <li>Un ejecutivo revisa la carga y la ruta.</li>
-        <li>Te enviamos la tarifa por correo el mismo día hábil.</li>
-      </ol>
-    </div>
-    <div class="side-card">
-      <h4>¿Necesitas ayuda?</h4>
-      <p>Si no tienes todos los datos, envía lo que tengas: te ayudamos a completarlo.</p>
-      <p>📞 <a href="tel:+56200000000">+56 2 0000 0000</a></p>
-      <p>✉️ <a href="mailto:contacto@airexpresscargo.cl">contacto@airexpresscargo.cl</a></p>
-    </div>
-  </aside>
+  <section class="calc-card" aria-labelledby="ratesTitle">
+    <h2 id="ratesTitle" class="calc-title">Tarifas disponibles</h2>
+    <p class="calc-sub" id="ratesSub">Santiago → Punta Arenas</p>
+    <div class="rates" id="rates"></div>
+    <p class="demo-note">Valores referenciales de prueba, no corresponden a tarifas reales. Retiro en tu bodega y entrega a domicilio incluidos. Se cobra el mayor entre el peso real y el peso volumétrico (largo × ancho × alto / 6.000).</p>
+  </section>
 </main>
 
 <footer class="footer">
@@ -184,6 +80,6 @@
   </div>
 </footer>
 
-<script src="script.js?v=4"></script>
+<script src="script.js?v=5"></script>
 </body>
 </html>

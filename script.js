@@ -47,140 +47,57 @@ if (contactForm) {
 }
 
 // ---------- Cotizador ----------
-const quoteForm = $('#quoteForm');
-if (quoteForm) {
-  let step = 1;
-  const total = 3;
-  const steps = $$('.form-step', quoteForm);
-  const prevBtn = $('#prevBtn');
-  const nextBtn = $('#nextBtn');
+// VALORES FICTICIOS DE PRUEBA: reemplazar por la tabla real de tarifas.
+const SERVICES = [
+  { id: 'terrestre', name: 'Envío terrestre', badge: 'Más económico', base: 6000, perKg: 450,
+    time: '4 a 5 días hábiles', detail: 'Salida todos los viernes. La opción más barata cuando no hay apuro.', maxKg: null },
+  { id: 'prime', name: 'Aéreo Prime', badge: null, base: 12000, perKg: 1400,
+    time: '24 a 48 horas', detail: 'Por avión, desde el retiro de tu carga.', maxKg: 110 },
+  { id: 'overnight', name: 'Aéreo Overnight', badge: 'Más rápido', base: 16000, perKg: 1900,
+    time: 'Menos de 24 horas', detail: 'Llega al día siguiente. Bultos de hasta 25 kg.', maxKg: 25 },
+];
+// Factor ficticio por ciudad (lejanía / acceso)
+const CITY_FACTOR = { 'Santiago': 1, 'Punta Arenas': 1, 'Puerto Natales': 1.15, 'Porvenir': 1.2, 'Puerto Williams': 1.45, 'Coyhaique': 0.9 };
+const clp = n => '$' + (Math.round(n / 10) * 10).toLocaleString('es-CL');
 
-  function rowTemplate(type) {
-    const row = document.createElement('div');
-    row.className = 'pkg-row';
-    row.dataset.type = type;
-    const ph = type === 'pallet' ? ['120', '100', '150'] : ['50', '40', '30'];
-    row.innerHTML = `
-      <div class="field"><input type="number" min="1" value="1" aria-label="Cantidad" data-k="q"></div>
-      <div class="field"><input type="number" min="0" placeholder="${ph[0]}" aria-label="Largo cm" data-k="l"></div>
-      <div class="field"><input type="number" min="0" placeholder="${ph[1]}" aria-label="Ancho cm" data-k="w"></div>
-      <div class="field"><input type="number" min="0" placeholder="${ph[2]}" aria-label="Alto cm" data-k="h"></div>
-      <div class="field"><input type="number" min="0" step="0.1" placeholder="kg" aria-label="Peso kg" data-k="kg"></div>
-      <button type="button" class="icon-btn" aria-label="Eliminar fila">×</button>`;
-    $('.icon-btn', row).addEventListener('click', () => { row.remove(); updateSummary(); });
-    return row;
+const calcForm = $('#calcForm');
+if (calcForm) {
+  const num = id => parseFloat(($(id).value || '').replace(',', '.'));
+  function calculate() {
+    const origen = $('#qOrigen').value, destino = $('#qDestino').value;
+    const alto = num('#qAlto'), largo = num('#qLargo'), ancho = num('#qAncho'), peso = num('#qPeso');
+    const err = $('#calcError');
+    let msg = '';
+    if (origen === destino) msg = 'El origen y el destino deben ser distintos.';
+    else if (![alto, largo, ancho, peso].every(v => v > 0)) msg = 'Ingresa alto, largo, ancho y peso mayores a cero.';
+    err.textContent = msg; err.classList.toggle('show', !!msg);
+    $('#ratesSub').textContent = `${origen} → ${destino}`;
+    if (msg) { $('#rates').innerHTML = ''; return; }
+
+    const volKg = (alto * largo * ancho) / 6000;
+    const kg = Math.max(peso, volKg);
+    const factor = Math.max(CITY_FACTOR[origen], CITY_FACTOR[destino]);
+    const maxSide = Math.max(alto, largo, ancho);
+
+    $('#rates').innerHTML = SERVICES.map(s => {
+      let blocked = '';
+      if (s.maxKg && peso > s.maxKg) blocked = `Disponible para bultos de hasta ${s.maxKg} kg.`;
+      else if (s.id !== 'terrestre' && maxSide > 100) blocked = 'Por avión, ningún lado puede superar 1 metro.';
+      const price = (s.base + kg * s.perKg) * factor;
+      const subject = encodeURIComponent(`Solicitud ${s.name}: ${origen} → ${destino}`);
+      const body = encodeURIComponent(`Servicio: ${s.name}\nRuta: ${origen} → ${destino}\nMedidas: ${alto} x ${largo} x ${ancho} cm\nPeso: ${peso} kg\nTarifa referencial: ${clp(price)}\n\nNombre:\nEmpresa:\nTeléfono:\nDirección de retiro:`);
+      return `<article class="rate rate-${s.id}${blocked ? ' rate-off' : ''}">
+        ${s.badge ? `<span class="rate-badge">${s.badge}</span>` : ''}
+        <h3>${s.name}</h3>
+        <p class="rate-time">${s.time}</p>
+        ${blocked ? `<p class="rate-price rate-na">No disponible</p><p class="rate-detail">${blocked}</p>`
+          : `<p class="rate-price">${clp(price)}</p><p class="rate-detail">${s.detail}</p>
+             <a class="btn btn-primary rate-btn" href="mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}">Solicitar</a>`}
+      </article>`;
+    }).join('');
+    $('#rates').insertAdjacentHTML('beforeend', `<p class="rate-kg">Peso cobrado: <strong>${kg.toLocaleString('es-CL', { maximumFractionDigits: 1 })} kg</strong>${volKg > peso ? ' (volumétrico)' : ''}</p>`);
   }
-  $('#addPkg').addEventListener('click', () => { $('#pkgList').append(rowTemplate('bulto')); });
-  $('#addPallet').addEventListener('click', () => { $('#palletList').append(rowTemplate('pallet')); });
-  $('#detailToggle').addEventListener('change', e => {
-    $('#detailBox').classList.toggle('show', e.target.checked);
-    if (e.target.checked && !$('#pkgList').children.length && !$('#palletList').children.length) {
-      $('#pkgList').append(rowTemplate('bulto'));
-    }
-    updateSummary();
-  });
-
-  function readRows() {
-    return $$('.pkg-row', quoteForm).map(r => {
-      const g = k => parseFloat($(`[data-k="${k}"]`, r).value) || 0;
-      return { type: r.dataset.type, q: g('q'), l: g('l'), w: g('w'), h: g('h'), kg: g('kg') };
-    }).filter(r => r.q > 0 && (r.l || r.w || r.h || r.kg));
-  }
-
-  function updateSummary() {
-    const v = n => (quoteForm.elements[n] ? quoteForm.elements[n].value.trim() : '');
-    $('#s-op').textContent = quoteForm.elements.operacion.value;
-    $('#s-mod').textContent = quoteForm.elements.modalidad.value;
-    $('#s-ruta').textContent = v('origen') || v('destino') ? `${v('origen') || '?'} → ${v('destino') || '?'}` : '—';
-    $('#s-merc').textContent = v('mercancia') || '—';
-
-    const detailed = $('#detailToggle').checked;
-    const rows = detailed ? readRows() : [];
-    let units = 0, vol = 0, kg = 0, pallets = 0, bultos = 0;
-    rows.forEach(r => {
-      units += r.q;
-      r.type === 'pallet' ? (pallets += r.q) : (bultos += r.q);
-      vol += r.q * (r.l * r.w * r.h) / 1e6;
-      kg += r.q * r.kg;
-    });
-    if (rows.length) {
-      const parts = [];
-      if (bultos) parts.push(`${bultos} bulto${bultos > 1 ? 's' : ''}`);
-      if (pallets) parts.push(`${pallets} pallet${pallets > 1 ? 's' : ''}`);
-      $('#s-bultos').textContent = parts.join(' + ');
-    } else {
-      $('#s-bultos').textContent = v('cantBultos') || '—';
-    }
-    const peso = kg > 0 ? kg : parseFloat(v('pesoTotal'));
-    $('#s-peso').textContent = peso ? `${peso.toLocaleString('es-CL')} kg` : '—';
-    $('#s-vol').textContent = vol > 0 ? `${vol.toLocaleString('es-CL', { maximumFractionDigits: 2 })} m³` : '—';
-  }
-  quoteForm.addEventListener('input', updateSummary);
-  quoteForm.addEventListener('change', updateSummary);
-
-  function validate(n) {
-    const err = $(`[data-error="${n}"]`);
-    let ok = true;
-    if (n === 1) ok = quoteForm.elements.origen.value.trim() && quoteForm.elements.destino.value.trim();
-    if (n === 2) ok = quoteForm.elements.mercancia.value.trim() && parseFloat(quoteForm.elements.pesoTotal.value) > 0;
-    if (n === 3) ok = quoteForm.elements.empresa.value.trim() && quoteForm.elements.nombre.value.trim() && /\S+@\S+\.\S+/.test(quoteForm.elements.email.value);
-    if (err) err.classList.toggle('show', !ok);
-    return !!ok;
-  }
-
-  function render() {
-    steps.forEach(s => s.classList.toggle('active', +s.dataset.step === step));
-    $$('.progress-step').forEach((p, i) => {
-      p.classList.toggle('done', i + 1 < step);
-      p.classList.toggle('current', i + 1 === step);
-    });
-    prevBtn.style.visibility = step > 1 && step <= total ? 'visible' : 'hidden';
-    nextBtn.textContent = step === total ? 'Enviar solicitud' : 'Continuar →';
-    $('#formNav').style.display = step > total ? 'none' : 'flex';
-    window.scrollTo({ top: quoteForm.getBoundingClientRect().top + window.scrollY - 160, behavior: 'smooth' });
-  }
-
-  function buildEmail() {
-    const f = quoteForm.elements;
-    const lines = [
-      'SOLICITUD DE COTIZACIÓN',
-      '',
-      `Operación: ${f.operacion.value}`,
-      `Modalidad: ${f.modalidad.value}`,
-      `Origen: ${f.origen.value}`,
-      `Destino: ${f.destino.value}`,
-      `Fecha estimada: ${f.fecha.value || 'No indicada'}`,
-      '',
-      `Mercancía: ${f.mercancia.value}`,
-      `Peso total aprox.: ${f.pesoTotal.value} kg`,
-      `Cantidad bultos/pallets: ${f.cantBultos.value || 'No indicada'}`,
-    ];
-    if ($('#detailToggle').checked) {
-      const rows = readRows();
-      if (rows.length) {
-        lines.push('', 'DETALLE DE MEDIDAS');
-        rows.forEach(r => lines.push(`- ${r.q} ${r.type}(s): ${r.l}x${r.w}x${r.h} cm, ${r.kg} kg c/u`));
-        lines.push(`Volumen total: ${$('#s-vol').textContent}`);
-      }
-      if (f.obs.value.trim()) lines.push('', `Observaciones: ${f.obs.value}`);
-    }
-    lines.push('', 'CONTACTO',
-      `Empresa: ${f.empresa.value}`, `RUT: ${f.rut.value}`,
-      `Nombre: ${f.nombre.value}`, `Cargo: ${f.cargo.value}`,
-      `Correo: ${f.email.value}`, `Teléfono: ${f.telefono.value}`);
-    return lines.join('\n');
-  }
-
-  nextBtn.addEventListener('click', () => {
-    if (!validate(step)) return;
-    if (step === total) {
-      const subject = `Cotización ${quoteForm.elements.modalidad.value} - ${quoteForm.elements.empresa.value}`;
-      window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(buildEmail())}`;
-    }
-    step++;
-    render();
-  });
-  prevBtn.addEventListener('click', () => { if (step > 1) { step--; render(); } });
-
-  updateSummary();
+  calcForm.addEventListener('submit', e => { e.preventDefault(); calculate(); });
+  $$('#calcForm select').forEach(el => el.addEventListener('change', calculate));
+  calculate();
 }
